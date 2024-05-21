@@ -85,7 +85,7 @@ struct ContentView: View {
         // MARK: Button
 
         Button {
-
+          fastingManager.toggleFastingState()
         } label: {
           Text(fastingManager.fastingState == .notStarted ? "End fast" : "Start fasting")
             .font(.title3)

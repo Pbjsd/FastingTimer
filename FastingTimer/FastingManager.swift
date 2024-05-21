@@ -14,4 +14,8 @@ enum FastingState {
 }
 class FastingManager: ObservableObject {
   @Published private(set) var fastingState: FastingState = .notStarted
+
+  func toggleFastingState() {
+    fastingState = fastingState == .fasting ? .feeding : .fasting
+  }
 }
