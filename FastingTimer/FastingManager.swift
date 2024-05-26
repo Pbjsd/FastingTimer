@@ -48,13 +48,7 @@ class FastingManager: ObservableObject {
       print("endTime", endTime.formatted(.dateTime.month().day().hour().minute().second()))
     }
   }
-
-  var fastingTime: Double {
-    return fastingPlan.fastingPeriod
-  }
-  var feedingTime: Double {
-    return 24 - fastingPlan.fastingPeriod
-  }
+  @Published private(set) var elapsed: Bool = false 
 
   var fastingTime: Double {
     return fastingPlan.fastingPeriod
@@ -86,5 +80,16 @@ class FastingManager: ObservableObject {
   func toggleFastingState() {
     fastingState = fastingState == .fasting ? .feeding : .fasting
     startTime = Date()
+  }
+  func track() {
+    print("now", Date().formatted(.dateTime.month().day().hour().minute().second()))
+
+    if endTime >= Date() {
+      print("Not elapsed")
+      elapsed = false
+    } else {
+      print("elapsed")
+      elapsed = true
+    }
   }
 }
