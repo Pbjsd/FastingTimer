@@ -39,11 +39,16 @@ class FastingManager: ObservableObject {
   init() {
     let calendar = Calendar.current
 
-    var components = calendar.dateComponents([.year, .month, .day, .hour], from: Date())
-    components.hour = 20
-    print(components)
+//    var components = calendar.dateComponents([.year, .month, .day, .hour], from: Date())
+//    components.hour = 20
+//    print(components)
+//
+//    let scheduledTime = calendar.date(from: components) ?? Date.now
+//    print("scheduledTime", scheduledTime.formatted(.dateTime.month().day().hour().minute().second()))
 
-    let scheduledTime = calendar.date(from: components) ?? Date.now
+    let components = DateComponents(hour: 20)
+    let scheduledTime = calendar.nextDate(after: .now, matching: components, matchingPolicy: .nextTime)!
+
     print("scheduledTime", scheduledTime.formatted(.dateTime.month().day().hour().minute().second()))
 
     startTime = scheduledTime
