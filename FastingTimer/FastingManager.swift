@@ -33,8 +33,28 @@ enum FastingPlan: String {
 class FastingManager: ObservableObject {
   @Published private(set) var fastingState: FastingState = .notStarted
   @Published private(set) var fastingPlan: FastingPlan = .intermediate
-  @Published private(set) var startTime: Date
-  @Published private(set) var endTime: Date
+  @Published private(set) var startTime: Date {
+    didSet {
+      print("startTime", startTime.formatted(.dateTime.month().day().hour().minute().second()))
+      if fastingState == .fasting {
+        endTime = startTime.addingTimeInterval(fastingTime)
+      } else {
+        endTime = startTime.addingTimeInterval(feedingTime)
+      }
+    }
+  }
+  @Published private(set) var endTime: Date {
+    didSet {
+      print("endTime", endTime.formatted(.dateTime.month().day().hour().minute().second()))
+    }
+  }
+
+  var fastingTime: Double {
+    return fastingPlan.fastingPeriod
+  }
+  var feedingTime: Double {
+    return 24 - fastingPlan.fastingPeriod
+  }
 
   init() {
     let calendar = Calendar.current
@@ -47,6 +67,7 @@ class FastingManager: ObservableObject {
 //    print("scheduledTime", scheduledTime.formatted(.dateTime.month().day().hour().minute().second()))
 
     let components = DateComponents(hour: 20)
+    
     let scheduledTime = calendar.nextDate(after: .now, matching: components, matchingPolicy: .nextTime)!
 
     print("scheduledTime", scheduledTime.formatted(.dateTime.month().day().hour().minute().second()))
@@ -57,5 +78,6 @@ class FastingManager: ObservableObject {
 
   func toggleFastingState() {
     fastingState = fastingState == .fasting ? .feeding : .fasting
+    startTime = Date()
   }
 }
