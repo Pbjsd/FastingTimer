@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProgressRing: View {
+  @EnvironmentObject var fastingManager: FastingManager
+
   @State var progress = 0.0
   var body: some View {
     ZStack {
@@ -33,7 +35,7 @@ struct ProgressRing: View {
           Text("Elapsed time")
             .opacity(0.7)
 
-          Text("0:00")
+          Text(fastingManager.startTime, style: .timer)
             .font(.title)
             .fontWeight(.bold)
         }
@@ -45,7 +47,7 @@ struct ProgressRing: View {
           Text("Remaining time")
             .opacity(0.7)
 
-          Text("0:00")
+          Text(fastingManager.endTime, style: .timer)
             .font(.title2)
             .fontWeight(.bold)
         }
@@ -61,6 +63,7 @@ struct ProgressRing: View {
   struct ProgressRing_Previews: PreviewProvider {
     static var previews: some View {
       ProgressRing()
+        .environmentObject(FastingManager())
     }
   }
 }
