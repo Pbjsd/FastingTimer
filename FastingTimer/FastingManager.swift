@@ -56,6 +56,13 @@ class FastingManager: ObservableObject {
     return 24 - fastingPlan.fastingPeriod
   }
 
+  var fastingTime: Double {
+    return fastingPlan.fastingPeriod
+  }
+  var feedingTime: Double {
+    return 24 - fastingPlan.fastingPeriod
+  }
+
   init() {
     let calendar = Calendar.current
 
