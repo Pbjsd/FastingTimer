@@ -82,6 +82,8 @@ class FastingManager: ObservableObject {
     startTime = Date()
   }
   func track() {
+    guard fastingState != .notStarted else { return }
+
     print("now", Date().formatted(.dateTime.month().day().hour().minute().second()))
 
     if endTime >= Date() {
