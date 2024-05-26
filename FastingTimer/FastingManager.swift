@@ -36,6 +36,13 @@ class FastingManager: ObservableObject {
   @Published private(set) var startTime: Date
   @Published private(set) var endTime: Date
 
+  var fastingTime: Double {
+    return fastingPlan.fastingPeriod
+  }
+  var feedingTime: Double {
+    return 24 - fastingPlan.fastingPeriod
+  }
+
   init() {
     let calendar = Calendar.current
 
@@ -57,5 +64,6 @@ class FastingManager: ObservableObject {
 
   func toggleFastingState() {
     fastingState = fastingState == .fasting ? .feeding : .fasting
+    startTime = Date()
   }
 }
